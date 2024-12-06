@@ -1,7 +1,9 @@
 import toast from "react-hot-toast";
 import SendIcon from "../../assets/send.svg";
+import { useStore } from "../../store/store";
 
 export default function QueryInput() {
+  const { videoPlayerRef } = useStore()
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -28,7 +30,11 @@ export default function QueryInput() {
 
       const results = await response.json()
 
-      console.log(results);
+      const timestamp = results.results[0].item.metadata.text
+
+      if (videoPlayerRef?.current) {
+        videoPlayerRef.current.currentTime = +timestamp
+      }
 
       toast.success("Query processed successfully!");
     } catch (error) {
