@@ -7,7 +7,7 @@ export default function Background() {
       <div
         style={{
           width: "50%",
-          backgroundColor: "rgba(23,65,34,0.1)",
+          backgroundColor: "rgba(167,24,178,0.2)",
           height: "100%",
         }}
       />

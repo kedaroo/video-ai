@@ -9,5 +9,5 @@ export default function VideoPlayer() {
     setVideoPlayerRef(videoPlayerRef)
   }, [videoPlayerRef, setVideoPlayerRef])
 
-  return <video width="600" ref={videoPlayerRef} controls src={videoSrc} />;
+  return <video width="600" style={{borderRadius: '1rem'}} ref={videoPlayerRef} controls src={videoSrc} />;
 }

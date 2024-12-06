@@ -20,7 +20,15 @@ export default function HomeLayout() {
     <div style={{ position: "relative", height: "100vh" }}>
       <Background />
       <Header />
-      <div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "2rem",
+          height: "80%",
+          alignItems: "center",
+        }}
+      >
         <Info />
         <VideoPlayer />
       </div>

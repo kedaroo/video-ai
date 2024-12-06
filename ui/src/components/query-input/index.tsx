@@ -46,6 +46,7 @@ export default function QueryInput() {
     <form
       style={{
         display: "flex",
+        gap: '0.25rem'
       }}
       onSubmit={handleSubmit}
     >
@@ -54,6 +55,15 @@ export default function QueryInput() {
         name="query"
         autoComplete="off"
         placeholder="Query your video in natural language!"
+        style={{
+          padding:'0.8rem',
+          width: '20rem',
+          borderRadius: '1rem',
+          outline: 'none',
+          border: '1px solid gray',
+          backgroundColor: 'rgba(0,0,0,0.05)',
+          fontSize: '1rem'
+        }}
       />
 
       <button
@@ -62,6 +72,10 @@ export default function QueryInput() {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          border: '1px solid gray',
+          aspectRatio: 1,
+          borderRadius: '50%',
+          width: '45px'
         }}
       >
         <img src={SendIcon} alt="send icon" className="invert" height={20} />
