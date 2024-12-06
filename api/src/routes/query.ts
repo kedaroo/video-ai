@@ -1,8 +1,8 @@
 import express from "express";
-import { chat } from "../controllers/chat-controller";
+import { query } from "../controllers/query";
 
 const router = express.Router();
 
-router.route("/chat").post(chat);
+router.route("/chat").post(query);
 
 export default router;

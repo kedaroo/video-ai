@@ -1,11 +1,10 @@
 import './App.css'
-import ChatLayout from './layouts/chat-layout'
+import HomeLayout from './layout/home'
 
-function App() {
+function App() {  
+
   return (
-    <div className=' mx-auto'>
-      <ChatLayout />
-    </div>
+    <HomeLayout />
   )
 }
 
