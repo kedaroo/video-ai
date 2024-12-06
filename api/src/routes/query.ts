@@ -3,6 +3,6 @@ import { query } from "../controllers/query";
 
 const router = express.Router();
 
-router.route("/chat").post(query);
+router.route("/query").get(query);
 
 export default router;

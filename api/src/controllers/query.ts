@@ -3,10 +3,10 @@ import { getEmbedding } from "../utils";
 import { vdb } from "../config/vectra";
 
 export const query = async (req: Request, res: Response) => {
-  const { query } = req.params
+  const { query } = req.query
 
   try {
-    const embedding = (await getEmbedding(query))[0];
+    const embedding = (await getEmbedding(query as string))[0];
 
     const results = await vdb.queryItems(embedding, 10);
 
