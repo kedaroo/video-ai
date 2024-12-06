@@ -1,9 +1,8 @@
 import { Request, Response } from "express";
 import {
-  addItems,
   extractFrames,
+  getEmbedding,
   getImagesWithTimestamps,
-  splitTextIntoChunks,
 } from "../utils";
 import { vdb } from "../config/vectra";
 import path from "path";
@@ -21,33 +20,47 @@ export const uploadVideo = async (req: Request, res: Response) => {
     const outputDir: string = path.join(__dirname, "output_frames"); // Define where to save the extracted frames
     const jsonFilePath: string = path.join(outputDir, "timestamps.json"); // Path to the timestamps JSON file
 
-    await extractFrames(filePath, outputDir, 10);
+    await extractFrames(filePath, outputDir, 100);
 
     const imagesWithTimestamps = getImagesWithTimestamps(
       outputDir,
       jsonFilePath
     );
 
-    const ollamaRes = await ollama.generate({
-      model: VISION_MODEL,
-      prompt: 'Describe this image',
-      images: [imagesWithTimestamps[1].data],
-    })
+    for (const img of imagesWithTimestamps) {
+      const ollamaRes = await ollama.generate({
+        model: VISION_MODEL,
+        prompt: "Describe this image",
+        images: [img.data],
+      });
 
-    // const response = await ollama.chat({
-    //   model: VISION_MODEL,
-    //   messages: [{
-    //     role: 'user',
-    //     content: 'What is in this image?',
-    //     images: [imagesWithTimestamps[0].data]
-    //   }]
-    // })
+      const embedding = await getEmbedding(ollamaRes.response);
 
-    console.log(ollamaRes);
+      await vdb.insertItem({
+        vector: embedding[0],
+        metadata: { text: img.timestamp },
+      });
+    }
+
+
+    fs.rm(filePath, { recursive: true, force: true }, (err) => {
+      if (err) {
+        console.error('Error deleting directory:', err);
+      } else {
+        console.log('Directory deleted successfully');
+      }
+    });
+    fs.rm(outputDir, { recursive: true, force: true }, (err) => {
+      if (err) {
+        console.error('Error deleting directory:', err);
+      } else {
+        console.log('Directory deleted successfully');
+      }
+    });
 
     return res.status(200).json({ success: true });
   } catch (e) {
-    console.log(e)
+    console.log(e);
     return res
       .status(500)
       .json({ succes: false, message: "An internal server error occured" });
