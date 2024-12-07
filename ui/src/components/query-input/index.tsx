@@ -31,6 +31,12 @@ export default function QueryInput() {
       const results = await response.json()
 
       const timestamp = results.results[0].item.metadata.text
+      const score = results.results[0].score
+
+      if (score < 0.5) {
+        toast.error("Couldn't find what you are looking for!");  
+        return
+      }
 
       if (videoPlayerRef?.current) {
         videoPlayerRef.current.currentTime = +timestamp
@@ -58,7 +64,7 @@ export default function QueryInput() {
         style={{
           padding:'0.8rem',
           width: '20rem',
-          borderRadius: '1rem',
+          borderRadius: '2rem',
           outline: 'none',
           border: '1px solid gray',
           backgroundColor: 'rgba(0,0,0,0.05)',

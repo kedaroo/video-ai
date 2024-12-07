@@ -47,7 +47,7 @@ export default function UploadBtn() {
         style={{          
           padding: "0.75rem",
           border: '1px solid black',
-          borderRadius: "1rem",
+          borderRadius: "2rem",
           width: 'fit-content'
         }}
       >
@@ -64,7 +64,7 @@ export default function UploadBtn() {
             onChange={onFileChange}
             type="file"
             style={{ display: "none" }}
-            // accept=".txt"
+            accept="video/*"
           />
         </label>
       </div>
